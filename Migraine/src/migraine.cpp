@@ -11,7 +11,7 @@ namespace br
 
 	int migraine::number(const int& intRegister)
 	{
-		return (intRegister * 10) + (getRealFunctionIndex() % 10);
+		return (intRegister * 10) + getRealFunctionIndex();
 	}
 
 	int migraine::add(const int& intRegister)
@@ -71,6 +71,7 @@ namespace br
 		{
 			int newProgramCounter = integerRegisters[!currentRegister];
 			programCounter = newProgramCounter;
+			currentRegister = 0;
 		}
 		return intRegister;
 	}
