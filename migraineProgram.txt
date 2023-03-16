@@ -1,0 +1,20 @@
+# while (register_0 < 10) { print(register_0) }
+
+e! ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee!			# register_0 << stack_0
+
+e! ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee. 					# print(register_0) 
+
+e! E ee! E										# register_1 = 1
+
+ee ee ee ee ee ee ee ee ee.								# register_0 += register_1
+
+e! E ee! e! .										# register_1 = 10
+
+ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee. E				# register_1 = 10 > register_0
+
+ee ee.											# stack_0 << register_0
+
+e! !											# register_0 = 0
+
+E ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee ee.				# goto 0 if register_1 == 1
+
