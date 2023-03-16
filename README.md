@@ -1,7 +1,7 @@
 # migraine
 An esoteric language that is guaranteed to give you a headache.
 
-You will need to take some paracetemol after attempting to code in this, have a look:
+You will need to take some paracetamol after attempting to code in this, have a look:
 
 ## Hello World example
 ```
