@@ -1,0 +1,48 @@
+# print("Hello World!")
+
+ee ee ee! e! ee ee. e! E				# Save the character print function index to register_0
+
+ee ee ee ee ee ee ee! e! ee ee.				# register_1 = 'H'
+
+E e. E . e!						# print(register_1)
+
+ee! e! . ee.						# register_1 = 'e'
+
+E e. E . e!
+
+ee! e! . ee ee ee ee ee ee ee ee.			# register_1 = 'l'
+
+E e. E . . e!
+
+ee! . . 						# register_1 = 'o'
+
+E e. E . e!
+
+ee ee ee! e! ee ee.					# register_1 = ' '
+
+E e. E . e!
+
+ee ee ee ee ee ee ee ee! e! ee ee ee ee ee ee ee.	# register_1 = 'W'
+
+E e. E . e!
+
+ee! . .							# register_1 = 'o'
+
+E e. E . e!
+
+ee! . ee ee ee.						# register_1 = 'r'
+
+E e. E . e!
+
+ee! e! . ee ee ee ee ee ee ee ee.			# register_1 = 'l'
+
+E e. E . e!
+
+ee! e! . .						# register_1 = 'd'
+
+E e. E . e!
+
+ee ee ee! .						# register_1 = '!'
+
+E e. E . e!
+
