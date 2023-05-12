@@ -66,9 +66,10 @@ namespace br
 
 	int migraine::branch(const int& intRegister)
 	{
-		int isBranching = (unsigned)intRegister > 0;
+		int isBranching = intRegister > 0;
 		if (isBranching)
 		{
+			integerStack.push_back((int)programCounter);
 			int newProgramCounter = integerRegisters[!currentRegister];
 			programCounter = newProgramCounter;
 			currentRegister = 0;

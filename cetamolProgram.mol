@@ -1,0 +1,9 @@
+_PRINT_
+< E < $32$ . E *
+
+_PRINT Hello World_
+< -72-		> _PRINT_ *
+< *
+
+_MAIN_
+_PRINT Hello World_ *
