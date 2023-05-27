@@ -102,7 +102,7 @@ e!!eeeeeeeeeeeeeeeeeee!!eeeeeeeeeeeeeeeeeee!!eeeeeeeeeeeeeeeeeee!!eeeeeeeeeeeeee
 | -- | -- |
 | > | Stack push |
 | < | Stack pop |
-| * | Guranteed branch |
+| * | Guaranteed branch |
 | ^ | Branch return |
 | ~ | Call stack pop |
 
@@ -148,7 +148,7 @@ _^main_
 | --- | --- |
 | Reference mode | \_`tag name`\_ |
 
-Reference a defined tag. This will generate the address to the defined tag as well as guranteed branching boilerplate
+Reference a defined tag. This will generate the address to the defined tag as well as guaranteed branching boilerplate
 
 *e.g*
 ```
