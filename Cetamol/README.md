@@ -75,7 +75,7 @@ e!ee!ee.e!ee.e!
 | -- | -- |
 | Fixed number mode | -f`number`- |
 
-Saves the number to the current register. This will generate a fixed length amount of operations, I'm currently using this to implement tags. Internally the fixed digit count is 16 (meaning the maximum number this can generate is 10<sup>16</sup>-1), you can change this number using the CMD flag `-f number`
+Saves the number to the current register. This will generate a fixed length amount of operations, I'm currently using this to implement tags. Internally the fixed digit count is 16 (meaning the maximum number this can generate is 10<sup>16</sup>-1).
 
 *e.g*
 ```
