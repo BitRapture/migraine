@@ -31,7 +31,7 @@ See, it's slightly more readable than migraine's hello world example!
 ### Number generation
 | Mode | Syntax |
 | -- | -- |
-| Function increment mode | \$`number`\$ |
+| Function increment mode | \$ `number` \$ |
 
 This will generate *n*-amount of function index increments
 
