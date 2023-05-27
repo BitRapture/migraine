@@ -88,7 +88,7 @@ It will always shift to the left to allow for a new digit, however when you pass
 | 36 | compare_greater | Check if the current register is greater than the non-current register, the current register will be overriden with the result |
 | 38 | branch | If the current register has a value greater than 0, it will set the program counter to the non-current register <br /> `v1.1 Change` <br />Pushes the current address to the call stack before branching |
 | 40 | branch_return | Return to the last address saved on the call stack | 
-| 42 | callstack_pop | Pop the last address saved on the call stack | 
+| 42 | callstack_pop | Pop the last address saved on the call stack. This does NOT return to the current register | 
 | 44 | stack_push | Push the current register to the stack | 
 | 46 | stack_pop | Pop from the top of the stack and override the current register with the popped value |
 | 48 | stack_read | Read the stack by accessing at an index provided by the current register, the current register will be overriden with the read value |
