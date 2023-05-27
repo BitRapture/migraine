@@ -1,7 +1,8 @@
-# Awesome cetamol example
+_MAIN_                  # Jump to MAIN
 
+_^HELLOWORLD_           # Define HELLOWORLD function
+e!
 -32- E					# Save the print index function to register_0
-
 -72- E e. E .			# 'H'
 -101- E e. E .			# 'e'
 -108- E e. E ..			# 'll'
@@ -13,3 +14,7 @@ E . E					# ' '
 -108- E e. E .			# 'l'
 -100- E e. E .			# 'd'
 -33- E e. E .			# '!'
+^                       # Return to MAIN
+
+_^MAIN_                 # Define MAIN function
+_HELLOWORLD_            # Jump to HELLOWORLD function
