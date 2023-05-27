@@ -6,9 +6,18 @@ int main(int argc, char** argv)
 	if (argc > 1)
 	{
 		br::cetamol generator;
-		if (argc > 2 && argv[2] == "-d")
+		if (argc > 2)
 		{
-			generator.AutoDocumentation = false;
+			size_t arglen = strlen(argv[2]);
+			if (arglen > 1 && argv[2][0] == '-')
+			{
+				switch (argv[2][1])
+				{
+				case 'd':
+					generator.AutoDocumentation = false;
+					break;
+				}
+			}
 		}
 		std::cout << generator.parseFile(argv[1]);
 	}

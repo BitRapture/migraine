@@ -1,16 +1,17 @@
 #include "cetamol.h"
+#include <algorithm>
 #include <fstream>
 #include <vector>
 
 namespace br
 {
 
-	bool cetamol::assert(bool condition, const char* errorMessage, std::string& content)
+	bool cetamol::assert(bool condition, const std::string errorMessage, std::string& content)
 	{
 		if (!condition)
 		{
-			content = "Error! ";
-			content += errorMessage;
+			content += "# Error! ";
+			content += errorMessage + '\n';
 		}
 		return condition;
 	}
@@ -95,31 +96,48 @@ namespace br
 		return numberProgram;
 	}
 
-	std::string cetamol::generateFullNumber(int number)
+	std::string cetamol::generateFullNumber(int number, int padding)
 	{
 		std::string numberProgram;
 		std::vector<int> digits = getDigits(number);
+		long digitsLength = digits.size();
+		long digitsLeft = digitsLength - 1;
 
-		bool isFirstDigit = true;
-		for (long i = digits.size() - 1; i > -1; --i)
+		if (digitsLength < padding)
+		{
+			digitsLeft = padding - digitsLength;
+			for (long i = 0; i < digitsLeft; ++i)
+			{
+				digits.push_back(0);
+			}
+			digitsLength = padding;
+		}
+
+		std::string lastProgram;
+		for (long i = digitsLength - 1; i > -1; --i)
 		{
 			numberProgram += resetFunctionIndex;
 			int currentDigit = digits.at(i);
 			int digitsRemaining = 9 - currentDigit;
 			numberProgram += fillChar(currentDigit * 2, indexIncrement);
-			if (isFirstDigit)
+			if (i >= digitsLength - digitsLeft)
 			{
 				numberProgram += passZeroFunction;
-				isFirstDigit = false;
 			}
 			else
 			{
 				numberProgram += pipeFunction;
 			}
-			numberProgram += fillChar(digitsRemaining * 2, indexIncrement);
+			lastProgram = fillChar(digitsRemaining * 2, indexIncrement);
+			numberProgram += lastProgram;
 		}
 
 		return numberProgram;
+	}
+
+	std::string cetamol::generateFixedNumber(int number)
+	{
+		return generateFullNumber(number, FixedDigitSize);
 	}
 
 	std::string cetamol::convertFilePath(const std::string& filePath)
@@ -143,20 +161,20 @@ namespace br
 		return directory + fileName;
 	}
 
-	std::string cetamol::generateMainJump(size_t& programCounter)
+	std::string cetamol::generateJump(long& address)
 	{
-		std::string mainJump;
-		int resolvedMainJumpIndex = resolveNumberDigits(programCounter + gotoBoilerPlate.length(), fullNumberLength);
-		mainJump = generateFullNumber(resolvedMainJumpIndex) + gotoBoilerPlate + '\n';
-		return mainJump;
+		std::string jumpProgram;
+		jumpProgram = generateFixedNumber(address) + gotoBoilerPlate + '\n';
+		return jumpProgram;
 	}
 
 	std::string cetamol::generateMigraine(const std::string& cetamolProgramData)
 	{
-		std::string migraineProgram = "";
-		std::string blurb = "# This migraine program was generated from a .mol file!\n# https://github.com/bitrapture/migraine\n\n";
+		std::vector<std::string> migraineProgram;
+		migraineProgram.push_back("");
+		std::string blurb = "# This migraine program was generated from a .mol file!\n# https://github.com/bitrapture/migraine\n";
+		blurb += "# Cetamol v" + std::to_string(generatorVersionMajor) + "." + std::to_string(generatorVersionMinor) + "\n\n";
 
-		std::string mainJump = "";
 		size_t programLength = cetamolProgramData.length();
 		size_t migraineProgramCounter = 0;
 		for (size_t i = 0; i < programLength; ++i)
@@ -175,17 +193,25 @@ namespace br
 					numberModeActive = true;
 					break;
 				case gotoTag:
-					migraineProgram += resetFunctionIndex;
-					migraineProgram += gotoBoilerPlate;
+					migraineProgram.back() += resetFunctionIndex;
+					migraineProgram.back() += gotoBoilerPlate;
 					migraineProgramCounter += gotoBoilerPlate.length() + 2;
 					break;
 				case stackPushTag:
-					migraineProgram += stackPushBoilerPlate;
+					migraineProgram.back() += stackPushBoilerPlate;
 					migraineProgramCounter += stackPushBoilerPlate.length();
 					break;
 				case stackPopTag:
-					migraineProgram += stackPopBoilerPlate;
+					migraineProgram.back() += stackPopBoilerPlate;
 					migraineProgramCounter += stackPopBoilerPlate.length();
+					break;
+				case branchReturnTag:
+					migraineProgram.back() += branchReturnBoilerPlate;
+					migraineProgramCounter += branchReturnBoilerPlate.length();
+					break;
+				case callStackPop:
+					migraineProgram.back() += callStackPopBoilerPlate;
+					migraineProgramCounter += callStackPopBoilerPlate.length();
 					break;
 				case indexIncrement:
 				case passZeroFunction:
@@ -193,7 +219,7 @@ namespace br
 				case swapRegister:
 					++migraineProgramCounter;
 				case '\n':
-					migraineProgram += currentChar;
+					migraineProgram.back() += currentChar;
 					break;
 				}
 			}
@@ -202,81 +228,88 @@ namespace br
 				switch (currentChar)
 				{
 				case labelTag:
-				case fillTag:
-				case numberTag:
-				{
 					if (labelModeActive)
 					{
-						auto labelTableQuery = labelTable.find(holdString);
-						if (labelTableQuery == labelTable.end())
+						bool labelDefined = holdString.at(0) == labelDefineTag;
+						holdString = labelDefined ? holdString.substr(1) : holdString;
+
+						bool labelExists = labelTable.find(holdString) != labelTable.end();
+						if (!labelExists) { labelTable[holdString] = -1; }
+
+						if (labelDefined)
 						{
-							migraineProgram += AutoDocumentation ? "\n# " + holdString + " define" : "";
-							if (holdString == "MAIN")
-							{
-								if (migraineProgramCounter > 0)
-								{
-									std::string jump = generateMainJump(migraineProgramCounter);
-									mainJump = AutoDocumentation ? "\n# MAIN jump boilerplate\n" : "";
-									mainJump += jump;
-									size_t programCounterShift = jump.length() - 1;
-									for (auto it = labelTable.begin(); it != labelTable.end(); it++)
-									{
-										it->second += (int)programCounterShift;
-									}
-									std::string mainReset = "\n";
-									mainReset += stackPopBoilerPlate += { passZeroFunction, swapRegister, passZeroFunction };
-									migraineProgram += mainReset;
-									migraineProgramCounter += programCounterShift + mainReset.length();
-								}
-							}
-							labelTable[holdString] = (int)migraineProgramCounter;
+							migraineProgram.back() += AutoDocumentation ? "\n# " + holdString + " define" : "\n";
+							labelTable[holdString] = migraineProgramCounter + 1;
 						}
 						else
 						{
-							labelPlacement.push_back(migraineProgramCounter);
-							//std::string numberProgram = generateNumber(labelTable[holdString]);
-							//migraineProgram += numberProgram;
-							//migraineProgramCounter += numberProgram.length();
-							// 
-							// Needs to be placed after since we're shifting
-							// UNFORTUNATELY
-							// we need to rework this all :(
-							// Needs to be redone so that the label positions get sorted after main code has been plonked down
-							// On the upside, this will mean any label can be branched forward as well as backwards
-							// On the downside, the whole resolver code is kinda frickin pointless :/
+							size_t fixedSize = fixedNumberLength + gotoBoilerPlate.length();
 
+							address_information entry;
+							entry.labelAddress = &labelTable[holdString];
+							entry.programAddress = migraineProgramCounter;
+							entry.gotoProgram = labelTable[holdString] > -1 ? generateJump(labelTable[holdString]) : fillChar(fixedSize, placeHolder);
+							addressInfo.push_back(entry);
+
+							migraineProgramCounter += fixedSize;
+							migraineProgram.push_back("");
 						}
+
 						labelModeActive = false;
 						holdString = "";
 					}
-					else if (numberModeActive)
+				case fillTag:
+				case numberTag:
+					if (numberModeActive)
 					{
+						bool isFixed = holdString.at(0) == fixedTag;
+						holdString = isFixed ? holdString.substr(1) : holdString;
+
 						errno = 0;
 						char* additionalChars = nullptr;
 						int number = strtol(holdString.c_str(), &additionalChars, 10);
 						if (errno == 0 && !*additionalChars)
 						{
-							std::string numberProgram = currentChar == fillTag ? fillChar(number, indexIncrement) : generateNumber(number);
-							migraineProgram += numberProgram;
+							std::string numberProgram = currentChar == fillTag ? fillChar(number, indexIncrement) : isFixed ? generateFixedNumber(number) : generateNumber(number);
+							migraineProgram.back() += numberProgram;
 							migraineProgramCounter += numberProgram.length();
 						}
 						numberModeActive = false;
 						holdString = "";
 					}
-					else
-					{
-						holdString += currentChar;
-					}
 					break;
 				}
-				default:
+
+				if (numberModeActive || labelModeActive)
+				{
 					holdString += currentChar;
-					break;
 				}
 			}
 		}
 
-		return blurb + mainJump + migraineProgram;
+		std::sort(addressInfo.begin(), addressInfo.end(), [](address_information& a, address_information& b) {
+			return a.programAddress < b.programAddress;
+		});
+
+		size_t programIt = 0;
+		std::string finalProgram;
+		for (auto info : addressInfo)
+		{
+			if (info.gotoProgram.at(0) == placeHolder && *info.labelAddress > -1)
+			{
+				info.gotoProgram = generateJump(*info.labelAddress);
+			}
+			finalProgram += migraineProgram.at(programIt) + info.gotoProgram;
+			programIt++;
+		}
+		finalProgram += migraineProgram.back();
+
+		std::string errorLogging;
+		assert(!labelModeActive, "Label define never closed", errorLogging);
+		assert(!numberModeActive, "Number define never closed", errorLogging);
+
+
+		return errorLogging + blurb + finalProgram;
 	}
 
 	std::string cetamol::parseFile(const std::string& filePath)
@@ -323,11 +356,21 @@ namespace br
 		gotoBoilerPlate += fillChar(38, indexIncrement) + pipeFunction;
 
 		stackPushBoilerPlate = resetFunctionIndex;
-		stackPushBoilerPlate += fillChar(40, indexIncrement) + pipeFunction;
+		stackPushBoilerPlate += fillChar(44, indexIncrement) + pipeFunction;
 		stackPushBoilerPlate += resetFunctionIndex;
 
 		stackPopBoilerPlate = resetFunctionIndex;
-		stackPopBoilerPlate += fillChar(42, indexIncrement) + passZeroFunction;
+		stackPopBoilerPlate += fillChar(46, indexIncrement) + passZeroFunction;
 		stackPopBoilerPlate += resetFunctionIndex;
+
+		branchReturnBoilerPlate = resetFunctionIndex;
+		branchReturnBoilerPlate += fillChar(40, indexIncrement) + passZeroFunction;
+		branchReturnBoilerPlate += resetFunctionIndex;
+
+		callStackPopBoilerPlate = resetFunctionIndex;
+		callStackPopBoilerPlate += fillChar(42, indexIncrement) + passZeroFunction;
+		callStackPopBoilerPlate += resetFunctionIndex;
+
+		fixedNumberMaximum = (int)pow(10, FixedDigitSize);
 	}
 }
