@@ -95,12 +95,14 @@ e!!eeeeeeeeeeeeeeeeeee!!eeeeeeeeeeeeeeeeeee!!eeeeeeeeeeeeeeeeeee!!eeeeeeeeeeeeee
 
 ```
 
+`WARNING` fixed number mode will not reset the function index at the end, make sure to add an `e!` afterwards!
+
 ### Macros
 | Macro character | Generates |
 | -- | -- |
 | > | Stack push |
 | < | Stack pop |
-| * | Branch |
+| * | Guranteed branch |
 | ^ | Branch return |
 | ~ | Call stack pop |
 
