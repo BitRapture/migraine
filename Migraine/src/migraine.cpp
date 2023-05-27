@@ -66,14 +66,37 @@ namespace br
 
 	int migraine::branch(const int& intRegister)
 	{
-		int isBranching = (unsigned)intRegister > 0;
+		int isBranching = intRegister > 0;
 		if (isBranching)
 		{
+			callStack.push_back((int)programCounter);
 			int newProgramCounter = integerRegisters[!currentRegister];
 			programCounter = newProgramCounter;
 			currentRegister = 0;
 		}
 		return intRegister;
+	}
+
+	int migraine::branchReturn(const int& intRegister)
+	{
+		int value = 0;
+		if (callStack.size() > 0)
+		{
+			value = callStack.back();
+			callStack.pop_back();
+		}
+		programCounter = intRegister + value;
+		return intRegister;
+	}
+
+	int migraine::callStackPop(const int& intRegister)
+	{
+		int value = intRegister;
+		if (callStack.size() > 0)
+		{
+			callStack.pop_back();
+		}
+		return value;
 	}
 
 	int migraine::stackPush(const int& intRegister)
@@ -131,8 +154,10 @@ namespace br
 		functionList.push_back(&migraine::compareEquals);	// 17
 		functionList.push_back(&migraine::compareGreater);
 		functionList.push_back(&migraine::branch);
+		functionList.push_back(&migraine::branchReturn);
+		functionList.push_back(&migraine::callStackPop);
 
-		functionList.push_back(&migraine::stackPush);		// 20
+		functionList.push_back(&migraine::stackPush);		// 21
 		functionList.push_back(&migraine::stackPop);
 		functionList.push_back(&migraine::stackRead);
 		functionList.push_back(&migraine::stackWrite);
@@ -200,5 +225,6 @@ namespace br
 	{
 		buildFunctionList();
 		integerStack.reserve(65535);
+		callStack.reserve(256);
 	}
 }

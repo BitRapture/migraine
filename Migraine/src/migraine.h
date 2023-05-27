@@ -16,6 +16,7 @@ namespace br
 		size_t programCounter;
 		std::vector<migraineFunction> functionList;
 		std::vector<int> integerStack;
+		std::vector<int> callStack;
 		unsigned int functionIndex;
 		bool currentRegister;
 		int integerRegisters[2];
@@ -33,6 +34,8 @@ namespace br
 		int compareEquals(const int&);
 		int compareGreater(const int&);
 		int branch(const int&);
+		int branchReturn(const int&);
+		int callStackPop(const int&);
 		int stackPush(const int&);
 		int stackPop(const int&);
 		int stackRead(const int&);

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.3.32922.545
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33423.256
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Migraine", "Migraine\Migraine.vcxproj", "{778AB7A1-DC46-43DF-BB8B-5B9FBA217577}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cetamol", "Cetamol\Cetamol.vcxproj", "{C3D45547-8300-4B44-BA12-62A5DC54C0A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{778AB7A1-DC46-43DF-BB8B-5B9FBA217577}.Release|x64.Build.0 = Release|x64
 		{778AB7A1-DC46-43DF-BB8B-5B9FBA217577}.Release|x86.ActiveCfg = Release|Win32
 		{778AB7A1-DC46-43DF-BB8B-5B9FBA217577}.Release|x86.Build.0 = Release|Win32
+		{C3D45547-8300-4B44-BA12-62A5DC54C0A7}.Debug|x64.ActiveCfg = Debug|x64
+		{C3D45547-8300-4B44-BA12-62A5DC54C0A7}.Debug|x64.Build.0 = Debug|x64
+		{C3D45547-8300-4B44-BA12-62A5DC54C0A7}.Debug|x86.ActiveCfg = Debug|Win32
+		{C3D45547-8300-4B44-BA12-62A5DC54C0A7}.Debug|x86.Build.0 = Debug|Win32
+		{C3D45547-8300-4B44-BA12-62A5DC54C0A7}.Release|x64.ActiveCfg = Release|x64
+		{C3D45547-8300-4B44-BA12-62A5DC54C0A7}.Release|x64.Build.0 = Release|x64
+		{C3D45547-8300-4B44-BA12-62A5DC54C0A7}.Release|x86.ActiveCfg = Release|Win32
+		{C3D45547-8300-4B44-BA12-62A5DC54C0A7}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

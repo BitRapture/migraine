@@ -1,0 +1,20 @@
+_MAIN_                  # Jump to MAIN
+
+_^HELLOWORLD_           # Define HELLOWORLD function
+e!
+-32- E					# Save the print index function to register_0
+-72- E e. E .			# 'H'
+-101- E e. E .			# 'e'
+-108- E e. E ..			# 'll'
+-111- E e. E .			# 'o'
+E . E					# ' '
+-87- E e. E .			# 'W'
+-111- E e. E .			# 'o'
+-114- E e. E .			# 'r'
+-108- E e. E .			# 'l'
+-100- E e. E .			# 'd'
+-33- E e. E .			# '!'
+^                       # Return to MAIN
+
+_^MAIN_                 # Define MAIN function
+_HELLOWORLD_            # Jump to HELLOWORLD function

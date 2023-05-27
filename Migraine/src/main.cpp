@@ -12,7 +12,7 @@ int main(int argc, char** argv)
 
 #ifdef _DEBUG
 	br::migraine model;
-	std::string programText = br::parseFile("../migraineProgram.txt");
+	std::string programText = br::parseFile("../cetamolProgram.mgrn");
 	model.run(programText);
 #endif
 
