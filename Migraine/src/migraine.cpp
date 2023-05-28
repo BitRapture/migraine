@@ -91,12 +91,11 @@ namespace br
 
 	int migraine::callStackPop(const int& intRegister)
 	{
-		int value = intRegister;
 		if (callStack.size() > 0)
 		{
 			callStack.pop_back();
 		}
-		return value;
+		return intRegister;
 	}
 
 	int migraine::stackPush(const int& intRegister)
