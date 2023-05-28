@@ -1,0 +1,27 @@
+.wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    text-align: center; 
+}
+
+.wrapper > * {
+    flex: 1 100%;
+}
+
+.editor {
+    width: auto;
+}
+
+#editor-input {
+    width: 45%;
+    height: 200px;
+}
+
+#editor-debug {
+    text-align: left;
+}
+
+p {
+    word-break: break-all;
+    white-space: normal;
+}
