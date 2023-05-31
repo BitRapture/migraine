@@ -181,3 +181,10 @@ For clarity what this program does:
 Bam! We defined main and ran a print function!
 
 `WARNING` since this uses branches, it has the same problem as stated in the warning above. Make sure to reset your function index like we do in the start of the print function!
+
+# To do:
+1. Update guaranteed branch macro, or make separate macro that pushes registers to stack
+1. Implement user macro defines, something like `[MACRO NAME][MACRO DEFINE]`, and later referenced as: `[MACRO NAME]`
+    1. This miiight take a hot minute to add, considering I need to make sure the macro define either gets inserted before migraine generation OR gets turned into migraine code on define
+1. Add conditional branch macro, probably the `?` character
+1. Remove guaranteed branch from tags, allow it to just dereference to an address (useful for making conditional loops)
