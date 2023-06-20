@@ -29,8 +29,8 @@ There now exists a migraine generator to ease the pain! [Check it out](Cetamol/R
   - Keeps track of how far it is within the program
   - Can be traversed through the branch function
 - """Unlimited""" integer stack
-  - Lets you store values from registers. Basically makes this whole language functional
-  - Can be accessed through sevaral stack functions
+  - Lets you store values from registers. Basically makes this entire language functional
+  - Can be accessed through several stack functions
 
 ## How do I use this nightmare?
 migraine has only 4 operation characters, but it lets you do everything you need.
@@ -84,15 +84,15 @@ It will always shift to the left to allow for a new digit, however when you pass
 | 28 | input | Gets input from stdin through the console, copies to the current register |
 | 30 | output_int | Output the current register as an integer to the console |
 | 32 | output_char | Output the current register as a character to the console |
-| 34 | compare_equals | Check if the current register is equal to the non-current register, the current register will be overriden with the result |
-| 36 | compare_greater | Check if the current register is greater than the non-current register, the current register will be overriden with the result |
+| 34 | compare_equals | Check if the current register is equal to the non-current register, the current register will be overwritten with the result |
+| 36 | compare_greater | Check if the current register is greater than the non-current register, the current register will be overwritten with the result |
 | 38 | branch | If the current register has a value greater than 0, it will set the program counter to the non-current register <br /> `v1.1 Change` <br />Pushes the current address to the call stack before branching |
 | 40 | branch_return | Return to the last address saved on the call stack | 
 | 42 | callstack_pop | Pop the last address saved on the call stack. This does NOT return to the current register | 
 | 44 | stack_push | Push the current register to the stack | 
-| 46 | stack_pop | Pop from the top of the stack and override the current register with the popped value |
-| 48 | stack_read | Read the stack by accessing at an index provided by the current register, the current register will be overriden with the read value |
-| 50 | stack_write | Write to the stack by accessing at an index provided by the current register, overrites the stack entry with a new value from the non-current register |
+| 46 | stack_pop | Pop from the top of the stack and overwrite the current register with the popped value |
+| 48 | stack_read | Read the stack by accessing at an index provided by the current register, the current register will be overwritten with the read value |
+| 50 | stack_write | Write to the stack by accessing at an index provided by the current register, overwrites the stack entry with a new value from the non-current register |
 
 Annnndd, that's all of them! That's the official function list however due to migraine being structured this way, it is completely possible to amend more functions to it. *The only issue is, the higher the index, the more ``e``'s are required to access them!!!*
 
@@ -105,6 +105,6 @@ The result will always be given back to the current register.
 I recommend checking out the ./Examples folder as I've included a few usable code demos with documentation!
 
 ## Latest update changes
-Ok so.... This change breaks the ABI, v1.0 programs will not run on v1.1. LUCKILY I can gurantee that I am the only individual using this at the minute so I'm allowed to break things :P
+Ok so.... This change breaks the ABI, v1.0 programs will not run on v1.1. LUCKILY I can guarantee that I am the only individual using this at the minute so I'm allowed to break things :P
 
 We really need a call stack if we want any meaningful programs to be made, it makes sense to group these new functions next to the pre-existing branch function as that is directly involved.
